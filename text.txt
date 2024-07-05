@@ -2,3 +2,11 @@
 MOVE
 turn_left
 turn_right
+loop
+IF identificador2
+else
+_identificado__r1
+Finish
+
+MoVe 2 
+If
