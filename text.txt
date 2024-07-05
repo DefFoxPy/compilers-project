@@ -1,1 +1,4 @@
 123
+MOVE
+turn_left
+turn_right
