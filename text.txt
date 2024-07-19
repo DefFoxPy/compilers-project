@@ -10,3 +10,12 @@ Finish
 
 MoVe 2 
 If
+light_up
+procedure defineProcedure
+call defineProcedure
+if
+identi = 123
+left_paren ( right_paren )
+left_brace { right_brace }
+comma,
+equal =
