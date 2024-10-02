@@ -1,0 +1,353 @@
+Terminals unused in grammar
+
+   TOKEN_EOF
+   TOKEN_COMMA
+   TOKEN_EQUAL
+   TOKEN_IF
+   TOKEN_ELSE
+
+
+Grammar
+
+    0 $accept: program $end
+
+    1 program: procedure
+
+    2 procedure: TOKEN_PROCEDURE TOKEN_IDENTIFIER TOKEN_LEFT_PAREN TOKEN_RIGHT_PAREN TOKEN_LEFT_BRACE commands TOKEN_RIGHT_BRACE
+
+    3 commands: commands command
+    4         | command
+
+    5 command: TOKEN_MOVE TOKEN_LEFT_PAREN TOKEN_RIGHT_PAREN
+    6        | TOKEN_TURN_LEFT TOKEN_LEFT_PAREN TOKEN_RIGHT_PAREN
+    7        | TOKEN_TURN_RIGHT TOKEN_LEFT_PAREN TOKEN_RIGHT_PAREN
+    8        | TOKEN_LIGHT_UP TOKEN_LEFT_PAREN TOKEN_RIGHT_PAREN
+    9        | TOKEN_LOOP TOKEN_LEFT_PAREN TOKEN_INT TOKEN_RIGHT_PAREN TOKEN_LEFT_BRACE commands TOKEN_RIGHT_BRACE
+   10        | TOKEN_CALL TOKEN_IDENTIFIER TOKEN_LEFT_PAREN TOKEN_RIGHT_PAREN
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256)
+TOKEN_EOF (258)
+TOKEN_INT (259) 9
+TOKEN_IDENTIFIER (260) 2 10
+TOKEN_MOVE (261) 5
+TOKEN_TURN_LEFT (262) 6
+TOKEN_TURN_RIGHT (263) 7
+TOKEN_LOOP (264) 9
+TOKEN_LIGHT_UP (265) 8
+TOKEN_PROCEDURE (266) 2
+TOKEN_CALL (267) 10
+TOKEN_LEFT_PAREN (268) 2 5 6 7 8 9 10
+TOKEN_RIGHT_PAREN (269) 2 5 6 7 8 9 10
+TOKEN_LEFT_BRACE (270) 2 9
+TOKEN_RIGHT_BRACE (271) 2 9
+TOKEN_COMMA (272)
+TOKEN_EQUAL (273)
+TOKEN_IF (274)
+TOKEN_ELSE (275)
+
+
+Nonterminals, with rules where they appear
+
+$accept (21)
+    on left: 0
+program (22)
+    on left: 1, on right: 0
+procedure (23)
+    on left: 2, on right: 1
+commands (24)
+    on left: 3 4, on right: 2 3 9
+command (25)
+    on left: 5 6 7 8 9 10, on right: 3 4
+
+
+State 0
+
+    0 $accept: . program $end
+
+    TOKEN_PROCEDURE  shift, and go to state 1
+
+    program    go to state 2
+    procedure  go to state 3
+
+
+State 1
+
+    2 procedure: TOKEN_PROCEDURE . TOKEN_IDENTIFIER TOKEN_LEFT_PAREN TOKEN_RIGHT_PAREN TOKEN_LEFT_BRACE commands TOKEN_RIGHT_BRACE
+
+    TOKEN_IDENTIFIER  shift, and go to state 4
+
+
+State 2
+
+    0 $accept: program . $end
+
+    $end  shift, and go to state 5
+
+
+State 3
+
+    1 program: procedure .
+
+    $default  reduce using rule 1 (program)
+
+
+State 4
+
+    2 procedure: TOKEN_PROCEDURE TOKEN_IDENTIFIER . TOKEN_LEFT_PAREN TOKEN_RIGHT_PAREN TOKEN_LEFT_BRACE commands TOKEN_RIGHT_BRACE
+
+    TOKEN_LEFT_PAREN  shift, and go to state 6
+
+
+State 5
+
+    0 $accept: program $end .
+
+    $default  accept
+
+
+State 6
+
+    2 procedure: TOKEN_PROCEDURE TOKEN_IDENTIFIER TOKEN_LEFT_PAREN . TOKEN_RIGHT_PAREN TOKEN_LEFT_BRACE commands TOKEN_RIGHT_BRACE
+
+    TOKEN_RIGHT_PAREN  shift, and go to state 7
+
+
+State 7
+
+    2 procedure: TOKEN_PROCEDURE TOKEN_IDENTIFIER TOKEN_LEFT_PAREN TOKEN_RIGHT_PAREN . TOKEN_LEFT_BRACE commands TOKEN_RIGHT_BRACE
+
+    TOKEN_LEFT_BRACE  shift, and go to state 8
+
+
+State 8
+
+    2 procedure: TOKEN_PROCEDURE TOKEN_IDENTIFIER TOKEN_LEFT_PAREN TOKEN_RIGHT_PAREN TOKEN_LEFT_BRACE . commands TOKEN_RIGHT_BRACE
+
+    TOKEN_MOVE        shift, and go to state 9
+    TOKEN_TURN_LEFT   shift, and go to state 10
+    TOKEN_TURN_RIGHT  shift, and go to state 11
+    TOKEN_LOOP        shift, and go to state 12
+    TOKEN_LIGHT_UP    shift, and go to state 13
+    TOKEN_CALL        shift, and go to state 14
+
+    commands  go to state 15
+    command   go to state 16
+
+
+State 9
+
+    5 command: TOKEN_MOVE . TOKEN_LEFT_PAREN TOKEN_RIGHT_PAREN
+
+    TOKEN_LEFT_PAREN  shift, and go to state 17
+
+
+State 10
+
+    6 command: TOKEN_TURN_LEFT . TOKEN_LEFT_PAREN TOKEN_RIGHT_PAREN
+
+    TOKEN_LEFT_PAREN  shift, and go to state 18
+
+
+State 11
+
+    7 command: TOKEN_TURN_RIGHT . TOKEN_LEFT_PAREN TOKEN_RIGHT_PAREN
+
+    TOKEN_LEFT_PAREN  shift, and go to state 19
+
+
+State 12
+
+    9 command: TOKEN_LOOP . TOKEN_LEFT_PAREN TOKEN_INT TOKEN_RIGHT_PAREN TOKEN_LEFT_BRACE commands TOKEN_RIGHT_BRACE
+
+    TOKEN_LEFT_PAREN  shift, and go to state 20
+
+
+State 13
+
+    8 command: TOKEN_LIGHT_UP . TOKEN_LEFT_PAREN TOKEN_RIGHT_PAREN
+
+    TOKEN_LEFT_PAREN  shift, and go to state 21
+
+
+State 14
+
+   10 command: TOKEN_CALL . TOKEN_IDENTIFIER TOKEN_LEFT_PAREN TOKEN_RIGHT_PAREN
+
+    TOKEN_IDENTIFIER  shift, and go to state 22
+
+
+State 15
+
+    2 procedure: TOKEN_PROCEDURE TOKEN_IDENTIFIER TOKEN_LEFT_PAREN TOKEN_RIGHT_PAREN TOKEN_LEFT_BRACE commands . TOKEN_RIGHT_BRACE
+    3 commands: commands . command
+
+    TOKEN_MOVE         shift, and go to state 9
+    TOKEN_TURN_LEFT    shift, and go to state 10
+    TOKEN_TURN_RIGHT   shift, and go to state 11
+    TOKEN_LOOP         shift, and go to state 12
+    TOKEN_LIGHT_UP     shift, and go to state 13
+    TOKEN_CALL         shift, and go to state 14
+    TOKEN_RIGHT_BRACE  shift, and go to state 23
+
+    command  go to state 24
+
+
+State 16
+
+    4 commands: command .
+
+    $default  reduce using rule 4 (commands)
+
+
+State 17
+
+    5 command: TOKEN_MOVE TOKEN_LEFT_PAREN . TOKEN_RIGHT_PAREN
+
+    TOKEN_RIGHT_PAREN  shift, and go to state 25
+
+
+State 18
+
+    6 command: TOKEN_TURN_LEFT TOKEN_LEFT_PAREN . TOKEN_RIGHT_PAREN
+
+    TOKEN_RIGHT_PAREN  shift, and go to state 26
+
+
+State 19
+
+    7 command: TOKEN_TURN_RIGHT TOKEN_LEFT_PAREN . TOKEN_RIGHT_PAREN
+
+    TOKEN_RIGHT_PAREN  shift, and go to state 27
+
+
+State 20
+
+    9 command: TOKEN_LOOP TOKEN_LEFT_PAREN . TOKEN_INT TOKEN_RIGHT_PAREN TOKEN_LEFT_BRACE commands TOKEN_RIGHT_BRACE
+
+    TOKEN_INT  shift, and go to state 28
+
+
+State 21
+
+    8 command: TOKEN_LIGHT_UP TOKEN_LEFT_PAREN . TOKEN_RIGHT_PAREN
+
+    TOKEN_RIGHT_PAREN  shift, and go to state 29
+
+
+State 22
+
+   10 command: TOKEN_CALL TOKEN_IDENTIFIER . TOKEN_LEFT_PAREN TOKEN_RIGHT_PAREN
+
+    TOKEN_LEFT_PAREN  shift, and go to state 30
+
+
+State 23
+
+    2 procedure: TOKEN_PROCEDURE TOKEN_IDENTIFIER TOKEN_LEFT_PAREN TOKEN_RIGHT_PAREN TOKEN_LEFT_BRACE commands TOKEN_RIGHT_BRACE .
+
+    $default  reduce using rule 2 (procedure)
+
+
+State 24
+
+    3 commands: commands command .
+
+    $default  reduce using rule 3 (commands)
+
+
+State 25
+
+    5 command: TOKEN_MOVE TOKEN_LEFT_PAREN TOKEN_RIGHT_PAREN .
+
+    $default  reduce using rule 5 (command)
+
+
+State 26
+
+    6 command: TOKEN_TURN_LEFT TOKEN_LEFT_PAREN TOKEN_RIGHT_PAREN .
+
+    $default  reduce using rule 6 (command)
+
+
+State 27
+
+    7 command: TOKEN_TURN_RIGHT TOKEN_LEFT_PAREN TOKEN_RIGHT_PAREN .
+
+    $default  reduce using rule 7 (command)
+
+
+State 28
+
+    9 command: TOKEN_LOOP TOKEN_LEFT_PAREN TOKEN_INT . TOKEN_RIGHT_PAREN TOKEN_LEFT_BRACE commands TOKEN_RIGHT_BRACE
+
+    TOKEN_RIGHT_PAREN  shift, and go to state 31
+
+
+State 29
+
+    8 command: TOKEN_LIGHT_UP TOKEN_LEFT_PAREN TOKEN_RIGHT_PAREN .
+
+    $default  reduce using rule 8 (command)
+
+
+State 30
+
+   10 command: TOKEN_CALL TOKEN_IDENTIFIER TOKEN_LEFT_PAREN . TOKEN_RIGHT_PAREN
+
+    TOKEN_RIGHT_PAREN  shift, and go to state 32
+
+
+State 31
+
+    9 command: TOKEN_LOOP TOKEN_LEFT_PAREN TOKEN_INT TOKEN_RIGHT_PAREN . TOKEN_LEFT_BRACE commands TOKEN_RIGHT_BRACE
+
+    TOKEN_LEFT_BRACE  shift, and go to state 33
+
+
+State 32
+
+   10 command: TOKEN_CALL TOKEN_IDENTIFIER TOKEN_LEFT_PAREN TOKEN_RIGHT_PAREN .
+
+    $default  reduce using rule 10 (command)
+
+
+State 33
+
+    9 command: TOKEN_LOOP TOKEN_LEFT_PAREN TOKEN_INT TOKEN_RIGHT_PAREN TOKEN_LEFT_BRACE . commands TOKEN_RIGHT_BRACE
+
+    TOKEN_MOVE        shift, and go to state 9
+    TOKEN_TURN_LEFT   shift, and go to state 10
+    TOKEN_TURN_RIGHT  shift, and go to state 11
+    TOKEN_LOOP        shift, and go to state 12
+    TOKEN_LIGHT_UP    shift, and go to state 13
+    TOKEN_CALL        shift, and go to state 14
+
+    commands  go to state 34
+    command   go to state 16
+
+
+State 34
+
+    3 commands: commands . command
+    9 command: TOKEN_LOOP TOKEN_LEFT_PAREN TOKEN_INT TOKEN_RIGHT_PAREN TOKEN_LEFT_BRACE commands . TOKEN_RIGHT_BRACE
+
+    TOKEN_MOVE         shift, and go to state 9
+    TOKEN_TURN_LEFT    shift, and go to state 10
+    TOKEN_TURN_RIGHT   shift, and go to state 11
+    TOKEN_LOOP         shift, and go to state 12
+    TOKEN_LIGHT_UP     shift, and go to state 13
+    TOKEN_CALL         shift, and go to state 14
+    TOKEN_RIGHT_BRACE  shift, and go to state 35
+
+    command  go to state 24
+
+
+State 35
+
+    9 command: TOKEN_LOOP TOKEN_LEFT_PAREN TOKEN_INT TOKEN_RIGHT_PAREN TOKEN_LEFT_BRACE commands TOKEN_RIGHT_BRACE .
+
+    $default  reduce using rule 9 (command)

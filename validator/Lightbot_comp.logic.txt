@@ -1,0 +1,15 @@
+program:
+
+El programa comienza con un procedimiento definido por la palabra clave PROCEDURE. El resultado del análisis sintáctico se almacena en parser_result.
+procedure:
+
+Define un procedimiento que incluye un nombre (el identificador) y un bloque de comandos delimitado por {}. Este bloque puede contener varias acciones o comandos que el robot debe ejecutar.
+
+commands y command:
+
+Se define una lista de comandos. Los comandos son acciones que el robot puede realizar, como MOVE(), TURN_LEFT(), TURN_RIGHT(), LOOP, y CALL.
+Cada acción se convierte en una instancia de una clase de comando correspondiente, por ejemplo, Move, TurnLeft, Loop, etc.
+
+LOOP: El bucle LOOP toma un número de iteraciones y ejecuta un bloque de comandos varias veces.
+
+CALL: Invocar procedimientos definidos por el usuario con la palabra clave CALL.
