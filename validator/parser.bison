@@ -19,8 +19,6 @@ int yyerror(const char*);
 %token TOKEN_RIGHT_PAREN
 %token TOKEN_LEFT_BRACE
 %token TOKEN_RIGHT_BRACE
-%token TOKEN_COMMA
-%token TOKEN_EQUAL
 %token TOKEN_IF
 %token TOKEN_ELSE
 
@@ -29,6 +27,7 @@ int yyerror(const char*);
 program : procedure;
 
 procedure : TOKEN_PROCEDURE TOKEN_IDENTIFIER TOKEN_LEFT_PAREN TOKEN_RIGHT_PAREN TOKEN_LEFT_BRACE commands TOKEN_RIGHT_BRACE 
+     | 
      ;
 
 commands : commands command 
@@ -41,9 +40,7 @@ command : TOKEN_MOVE TOKEN_LEFT_PAREN TOKEN_RIGHT_PAREN
        | TOKEN_LIGHT_UP TOKEN_LEFT_PAREN TOKEN_RIGHT_PAREN
        | TOKEN_LOOP TOKEN_LEFT_PAREN TOKEN_INT TOKEN_RIGHT_PAREN TOKEN_LEFT_BRACE commands TOKEN_RIGHT_BRACE 
        | TOKEN_CALL TOKEN_IDENTIFIER TOKEN_LEFT_PAREN TOKEN_RIGHT_PAREN
-       ;
-
-       
+       ;   
 %%
 
 int yyerror(const char* s)

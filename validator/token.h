@@ -59,10 +59,8 @@ extern int yydebug;
     TOKEN_RIGHT_PAREN = 269,
     TOKEN_LEFT_BRACE = 270,
     TOKEN_RIGHT_BRACE = 271,
-    TOKEN_COMMA = 272,
-    TOKEN_EQUAL = 273,
-    TOKEN_IF = 274,
-    TOKEN_ELSE = 275
+    TOKEN_IF = 272,
+    TOKEN_ELSE = 273
   };
 #endif
 
