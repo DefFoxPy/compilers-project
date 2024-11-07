@@ -65,11 +65,17 @@
 #line 1 "parser.bison" /* yacc.c:339  */
 
 #include <stdio.h>
+#include <stdlib.h>
+#include "commands.hpp"  // Aquí estarían las clases Command, Move, TurnLeft, Loop, etc.
+
+#define YYSTYPE Command*  // Los valores del parser serán punteros a comandos
 
 extern int yylex();
+extern char* yytext;
 int yyerror(const char*);
+Command* parser_result{nullptr};  // Resultado del análisis sintáctico
 
-#line 73 "parser.c" /* yacc.c:339  */
+#line 79 "parser.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -139,7 +145,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 143 "parser.c" /* yacc.c:358  */
+#line 149 "parser.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -438,8 +444,8 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    27,    27,    29,    33,    34,    37,    38,    39,    40,
-      41,    44
+       0,    33,    33,    36,    40,    41,    44,    45,    46,    47,
+      48,    51
 };
 #endif
 
@@ -1228,8 +1234,68 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
-      
-#line 1233 "parser.c" /* yacc.c:1646  */
+        case 2:
+#line 33 "parser.bison" /* yacc.c:1646  */
+    { parser_result = (yyvsp[0]); }
+#line 1241 "parser.c" /* yacc.c:1646  */
+    break;
+
+  case 3:
+#line 37 "parser.bison" /* yacc.c:1646  */
+    { (yyval) = new Procedure(yytext, dynamic_cast<CommandList*>((yyvsp[-1]))); }
+#line 1247 "parser.c" /* yacc.c:1646  */
+    break;
+
+  case 4:
+#line 40 "parser.bison" /* yacc.c:1646  */
+    { (yyval) = dynamic_cast<CommandList*>((yyvsp[-1])); (yyvsp[-1])->addCommand((yyvsp[0])); }
+#line 1253 "parser.c" /* yacc.c:1646  */
+    break;
+
+  case 5:
+#line 41 "parser.bison" /* yacc.c:1646  */
+    { (yyval) = new CommandList(); (yyval)->addCommand((yyvsp[0])); }
+#line 1259 "parser.c" /* yacc.c:1646  */
+    break;
+
+  case 6:
+#line 44 "parser.bison" /* yacc.c:1646  */
+    { (yyval) = new Move(); }
+#line 1265 "parser.c" /* yacc.c:1646  */
+    break;
+
+  case 7:
+#line 45 "parser.bison" /* yacc.c:1646  */
+    { (yyval) = new TurnLeft(); }
+#line 1271 "parser.c" /* yacc.c:1646  */
+    break;
+
+  case 8:
+#line 46 "parser.bison" /* yacc.c:1646  */
+    { (yyval) = new TurnRight(); }
+#line 1277 "parser.c" /* yacc.c:1646  */
+    break;
+
+  case 9:
+#line 47 "parser.bison" /* yacc.c:1646  */
+    { (yyval) = new LightUp(); }
+#line 1283 "parser.c" /* yacc.c:1646  */
+    break;
+
+  case 10:
+#line 49 "parser.bison" /* yacc.c:1646  */
+    { (yyval) = new Loop(atoi(yytext), dynamic_cast<CommandList*>((yyvsp[-1]))); }
+#line 1289 "parser.c" /* yacc.c:1646  */
+    break;
+
+  case 11:
+#line 51 "parser.bison" /* yacc.c:1646  */
+    { (yyval) = new ProcedureCall(yytext); }
+#line 1295 "parser.c" /* yacc.c:1646  */
+    break;
+
+
+#line 1299 "parser.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1457,7 +1523,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 46 "parser.bison" /* yacc.c:1906  */
+#line 54 "parser.bison" /* yacc.c:1906  */
 
 
 int yyerror(const char* s)
