@@ -21,6 +21,7 @@ IF         [Ii][Ff]
 ELSE       [Ee][Ll][Ss][Ee]
 COMMENT    \/\/.* 
 
+
 %%
 {SPACE}       {}
 {NEWLINE}     { count_line++; }

@@ -705,7 +705,7 @@ YY_DECL
 		}
 
 	{
-#line 24 "scanner.flex"
+#line 25 "scanner.flex"
 
 #line 711 "scanner.c"
 
@@ -766,103 +766,103 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 25 "scanner.flex"
+#line 26 "scanner.flex"
 {}
 	YY_BREAK
 case 2:
 /* rule 2 can match eol */
 YY_RULE_SETUP
-#line 26 "scanner.flex"
+#line 27 "scanner.flex"
 { count_line++; }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 27 "scanner.flex"
+#line 28 "scanner.flex"
 { return TOKEN_INT; }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 28 "scanner.flex"
+#line 29 "scanner.flex"
 { return TOKEN_MOVE; }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 29 "scanner.flex"
+#line 30 "scanner.flex"
 { return TOKEN_TURN_LEFT; }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 30 "scanner.flex"
+#line 31 "scanner.flex"
 { return TOKEN_TURN_RIGHT; }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 31 "scanner.flex"
+#line 32 "scanner.flex"
 { return TOKEN_LOOP; }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 32 "scanner.flex"
+#line 33 "scanner.flex"
 { return TOKEN_LIGHT_UP; }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 33 "scanner.flex"
+#line 34 "scanner.flex"
 { return TOKEN_PROCEDURE; }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 34 "scanner.flex"
+#line 35 "scanner.flex"
 { return TOKEN_CALL; }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 35 "scanner.flex"
+#line 36 "scanner.flex"
 { return TOKEN_LEFT_PAREN; }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 36 "scanner.flex"
+#line 37 "scanner.flex"
 { return TOKEN_RIGHT_PAREN; }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 37 "scanner.flex"
+#line 38 "scanner.flex"
 { return TOKEN_LEFT_BRACE; }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 38 "scanner.flex"
+#line 39 "scanner.flex"
 { return TOKEN_RIGHT_BRACE; }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 39 "scanner.flex"
+#line 40 "scanner.flex"
 { return TOKEN_IF; }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 40 "scanner.flex"
+#line 41 "scanner.flex"
 { return TOKEN_ELSE; }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 41 "scanner.flex"
+#line 42 "scanner.flex"
 { return TOKEN_IDENTIFIER; }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 42 "scanner.flex"
+#line 43 "scanner.flex"
 {}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 43 "scanner.flex"
+#line 44 "scanner.flex"
 { printf("Unexpected token in line %d - %s\n", count_line, yytext); }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 45 "scanner.flex"
+#line 46 "scanner.flex"
 ECHO;
 	YY_BREAK
 #line 869 "scanner.c"
@@ -1870,7 +1870,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 45 "scanner.flex"
+#line 46 "scanner.flex"
 
 
 int yywrap() { return 1; }
