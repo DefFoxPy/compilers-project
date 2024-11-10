@@ -38,9 +38,16 @@ procedure : TOKEN_PROCEDURE TOKEN_IDENTIFIER TOKEN_LEFT_PAREN
             TOKEN_RIGHT_PAREN TOKEN_LEFT_BRACE commands TOKEN_RIGHT_BRACE       { $$ = new Procedure(yytext, dynamic_cast<CommandList*>($6)); }
           ;
 
-commands : commands command                                                     { $$ = dynamic_cast<CommandList*>($1); $1->addCommand($2); }
-         | command                                                              { $$ = new CommandList(); $$->addCommand($1); }
-         ;
+commands : commands command
+{ 
+    $$ = dynamic_cast<CommandList*>($1); 
+    if ($$) {
+        $$->addCommand($2); 
+    } else {
+        $$ = new CommandList(); 
+        $$->addCommand($1);
+    }
+}
 
 command : TOKEN_MOVE TOKEN_LEFT_PAREN TOKEN_RIGHT_PAREN                         { $$ = new Move(); }
         | TOKEN_TURN_LEFT TOKEN_LEFT_PAREN TOKEN_RIGHT_PAREN                    { $$ = new TurnLeft(); }
