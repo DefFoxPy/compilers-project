@@ -32,7 +32,7 @@ Command* parser_result{nullptr};
 %%
 
 program : procedure                                                             { parser_result = $1; }
-        |
+        | %empty
         ;
 
 procedure : TOKEN_PROCEDURE TOKEN_IDENTIFIER TOKEN_LEFT_PAREN 
