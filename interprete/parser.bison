@@ -32,6 +32,7 @@ Command* parser_result{nullptr};
 %%
 
 program : procedure                                                             { parser_result = $1; }
+        |
         ;
 
 procedure : TOKEN_PROCEDURE TOKEN_IDENTIFIER TOKEN_LEFT_PAREN 
@@ -41,13 +42,25 @@ procedure : TOKEN_PROCEDURE TOKEN_IDENTIFIER TOKEN_LEFT_PAREN
 commands : commands command
 { 
     $$ = dynamic_cast<CommandList*>($1); 
+    CommandList* newList0 = new CommandList();
+
     if ($$) {
-        $$->addCommand($2); 
+        newList0->addCommand($2);
+        $$ = newList0;
     } else {
         $$ = new CommandList(); 
-        $$->addCommand($1);
+        newList0->addCommand($1);
+        $$ = newList0;
     }
 }
+        | command
+{
+    CommandList* newList = new CommandList();
+    newList->addCommand($1);
+    $$ = newList;
+}
+
+;
 
 command : TOKEN_MOVE TOKEN_LEFT_PAREN TOKEN_RIGHT_PAREN                         { $$ = new Move(); }
         | TOKEN_TURN_LEFT TOKEN_LEFT_PAREN TOKEN_RIGHT_PAREN                    { $$ = new TurnLeft(); }

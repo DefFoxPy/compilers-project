@@ -4,8 +4,8 @@ BISON = bison -Wall --defines=token.h #Tuve que eliminar -Wcounterexamples con w
 
 all: interpreter
 
-interpreter: parser.o scanner.o main.o expression.o
-	$(CXX) scanner.o parser.o main.o expression.o -o interpreter
+interpreter: parser.o scanner.o main.o commands.o
+	$(CXX) scanner.o parser.o main.o commands.o -o interpreter
 
 parser.o: parser.c
 	$(CXX) -c -I. parser.c
@@ -22,8 +22,8 @@ scanner.c: scanner.flex
 main.o: token.h main.c
 	$(CXX) -c -I. main.c
 
-expression.o: expression.hpp expression.cpp
-	$(CXX) -c -I. expression.cpp
+commands.o: commands.hpp commands.cpp
+	$(CXX) -c -I. commands.cpp
 
 .PHONY:
 clean:
