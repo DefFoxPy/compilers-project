@@ -7,6 +7,7 @@
 
 extern int yylex();
 extern char* yytext;
+extern int count_line;
 int yyerror(const char*);
 Command* parser_result{nullptr}; 
 
@@ -71,11 +72,10 @@ command : TOKEN_MOVE TOKEN_LEFT_PAREN TOKEN_RIGHT_PAREN                         
 
         | TOKEN_CALL TOKEN_IDENTIFIER TOKEN_LEFT_PAREN TOKEN_RIGHT_PAREN        { $$ = new ProcedureCall(yytext); }
         ;
-
 %%
 
 int yyerror(const char* s)
 {
-    printf("Parse error: %s\n", s);
+    printf("Parse error at line %d: %s\n", count_line, s);
     return 1;
 }
