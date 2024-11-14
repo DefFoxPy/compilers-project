@@ -1,8 +1,5 @@
 PROCEDURE main() {
-    MOVE()            // El robot se mueve una vez hacia adelante
     LOOP(3) {          // El robot entra en un bucle para moverse 3 veces
-        MOVE()        // Se mueve hacia adelante
-        TURN_LEFT()   // Gira a la izquierda
+        MOVE()
     }
-    LIGHT_UP()        // Después del bucle, el robot enciende una luz
 }

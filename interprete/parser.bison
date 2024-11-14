@@ -7,14 +7,18 @@
 
 extern int yylex();
 extern char* yytext;
+extern int count_line;
+extern int int_value;     
 int yyerror(const char*);
 Command* parser_result{nullptr}; 
+
+std::string identifier; 
+      
 
 %}
 
 %token TOKEN_EOF
 %token TOKEN_INT
-%token TOKEN_IDENTIFIER
 %token TOKEN_MOVE
 %token TOKEN_TURN_LEFT
 %token TOKEN_TURN_RIGHT
@@ -28,29 +32,30 @@ Command* parser_result{nullptr};
 %token TOKEN_RIGHT_BRACE
 %token TOKEN_IF
 %token TOKEN_ELSE
+%token TOKEN_IDENTIFIER
+
 
 %%
 
 program : procedure                                                             { parser_result = $1; }
-        |
+        | %empty
         ;
 
 procedure : TOKEN_PROCEDURE TOKEN_IDENTIFIER TOKEN_LEFT_PAREN 
-            TOKEN_RIGHT_PAREN TOKEN_LEFT_BRACE commands TOKEN_RIGHT_BRACE       { $$ = new Procedure(yytext, dynamic_cast<CommandList*>($6)); }
+            TOKEN_RIGHT_PAREN TOKEN_LEFT_BRACE commands TOKEN_RIGHT_BRACE       { $$ = new Procedure(identifier, dynamic_cast<CommandList*>($6)); }
           ;
 
 commands : commands command
 { 
-    $$ = dynamic_cast<CommandList*>($1); 
-    CommandList* newList0 = new CommandList();
+    CommandList* cmdList = dynamic_cast<CommandList*>($1);
+    CommandList* cmdList2 = new CommandList();
 
-    if ($$) {
-        newList0->addCommand($2);
-        $$ = newList0;
+    if (cmdList) {
+        cmdList->addCommand($2);
+        $$ = cmdList;
     } else {
-        $$ = new CommandList(); 
-        newList0->addCommand($1);
-        $$ = newList0;
+        cmdList2->addCommand($2); 
+        $$ = cmdList2;
     }
 }
         | command
@@ -66,16 +71,22 @@ command : TOKEN_MOVE TOKEN_LEFT_PAREN TOKEN_RIGHT_PAREN                         
         | TOKEN_TURN_LEFT TOKEN_LEFT_PAREN TOKEN_RIGHT_PAREN                    { $$ = new TurnLeft(); }
         | TOKEN_TURN_RIGHT TOKEN_LEFT_PAREN TOKEN_RIGHT_PAREN                   { $$ = new TurnRight(); }
         | TOKEN_LIGHT_UP TOKEN_LEFT_PAREN TOKEN_RIGHT_PAREN                     { $$ = new LightUp(); }
-        | TOKEN_LOOP TOKEN_LEFT_PAREN TOKEN_INT TOKEN_RIGHT_PAREN 
-          TOKEN_LEFT_BRACE commands TOKEN_RIGHT_BRACE                           { $$ = new Loop(atoi(yytext), dynamic_cast<CommandList*>($6)); }
+        | TOKEN_LOOP TOKEN_LEFT_PAREN TOKEN_INT TOKEN_RIGHT_PAREN TOKEN_LEFT_BRACE commands TOKEN_RIGHT_BRACE                           
+        { 
+            $$ = new Loop(int_value, dynamic_cast<CommandList*>($6)); 
+            //printf("Loop detected with %d iterations\n", int_value);
+            //printf("Loop1 detected with %d iterations\n", atoi(yytext));
+            //printf("Loop2 detected with %s iterations\n", (yytext));
+            
+        
+        }
 
-        | TOKEN_CALL TOKEN_IDENTIFIER TOKEN_LEFT_PAREN TOKEN_RIGHT_PAREN        { $$ = new ProcedureCall(yytext); }
+        | TOKEN_CALL TOKEN_IDENTIFIER TOKEN_LEFT_PAREN TOKEN_RIGHT_PAREN        { $$ = new ProcedureCall(identifier); }
         ;
-
 %%
 
 int yyerror(const char* s)
 {
-    printf("Parse error: %s\n", s);
+    printf("Parse error at line %d: %s\n", count_line, s);
     return 1;
 }

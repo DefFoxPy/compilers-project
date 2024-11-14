@@ -1,8 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <commands.hpp>
+
 
 extern FILE* yyin;
 extern int yyparse();
+extern Command* parser_result;
 
 void usage(char* argv[])
 {
@@ -30,6 +33,9 @@ int main(int argc, char* argv[])
     if (result == 0)
     {
         printf("Parse successful!\n");
+        parser_result->execute();
+        parser_result->destroy();
+        printf("\n\nMemoria liberada...\n");
     }
     else
     {

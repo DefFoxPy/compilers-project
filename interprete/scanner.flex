@@ -1,7 +1,10 @@
 %{
+
 #include "token.h"
 
 int count_line = 1;
+int int_value = 0;
+
 %}
 
 SPACE      [ \t]
@@ -25,7 +28,7 @@ COMMENT    \/\/.*
 %%
 {SPACE}       {}
 {NEWLINE}     { count_line++; }
-{INT}         { return TOKEN_INT; }
+{INT}         { int_value = atoi(yytext); return TOKEN_INT; }
 {MOVE}        { return TOKEN_MOVE; }
 {TURN_LEFT}   { return TOKEN_TURN_LEFT; }
 {TURN_RIGHT}  { return TOKEN_TURN_RIGHT; }
