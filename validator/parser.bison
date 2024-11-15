@@ -1,7 +1,9 @@
 %{
 #include <stdio.h>
+#include <stdlib.h>
 
 extern int yylex();
+extern int count_line;
 int yyerror(const char*);
 %}
 
@@ -19,8 +21,6 @@ int yyerror(const char*);
 %token TOKEN_RIGHT_PAREN
 %token TOKEN_LEFT_BRACE
 %token TOKEN_RIGHT_BRACE
-%token TOKEN_IF
-%token TOKEN_ELSE
 
 %%
 
@@ -47,6 +47,6 @@ command : TOKEN_MOVE TOKEN_LEFT_PAREN TOKEN_RIGHT_PAREN
 
 int yyerror(const char* s)
 {
-    printf("Parse error: %s\n", s);
+    printf("Parse error at line %d: %s\n", count_line, s);
     return 1;
 }

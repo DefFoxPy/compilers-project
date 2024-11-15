@@ -14,7 +14,6 @@ Command* parser_result{nullptr};
 
 std::string identifier; 
       
-
 %}
 
 %token TOKEN_EOF
@@ -30,8 +29,6 @@ std::string identifier;
 %token TOKEN_RIGHT_PAREN
 %token TOKEN_LEFT_BRACE
 %token TOKEN_RIGHT_BRACE
-%token TOKEN_IF
-%token TOKEN_ELSE
 %token TOKEN_IDENTIFIER
 
 

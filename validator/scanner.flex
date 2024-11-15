@@ -17,8 +17,6 @@ LOOP       [Ll][Oo][Oo][Pp]
 LIGHT_UP   [Ll][Ii][Gg][Hh][Tt][_][Uu][Pp]
 PROCEDURE  [Pp][Rr][Oo][Cc][Ee][Dd][Uu][Rr][Ee]
 CALL       [Cc][Aa][Ll][Ll]
-IF         [Ii][Ff]
-ELSE       [Ee][Ll][Ss][Ee]
 COMMENT    \/\/.* 
 
 
@@ -37,8 +35,6 @@ COMMENT    \/\/.*
 ")"           { return TOKEN_RIGHT_PAREN; }
 "{"           { return TOKEN_LEFT_BRACE; }
 "}"           { return TOKEN_RIGHT_BRACE; }
-{IF}          { return TOKEN_IF; }
-{ELSE}        { return TOKEN_ELSE; }
 {IDENTIFIER}  { return TOKEN_IDENTIFIER; }
 {COMMENT}     {}
 .             { printf("Unexpected token in line %d - %s\n", count_line, yytext); }
