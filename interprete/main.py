@@ -1,10 +1,20 @@
 import pygame
 import sys
+import tkinter as tk
+from tkinter import filedialog
 
 # constantes
+SCREEN_WIDTH = 800
+SCREEN_HIGHT = 600
 MURO = 1
 ROBOT = 2
 META = 9
+
+def open_file_dialog():
+    root = tk.Tk()
+    root.withdraw()  # Oculta la ventana principal de Tkinter
+    file_path = filedialog.askopenfilename()  # Abre el diálogo para seleccionar un archivo
+    return file_path
 
 class Cell:
     
@@ -111,9 +121,18 @@ class Board:
                 if self.bot_x == y and self.bot_y == x:
                     pygame.draw.circle(screen, (0, 0, 255), (x * cell_size + cell_size//2, y * cell_size + cell_size//2), cell_size//2)
 
+def draw_button(screen, button_text, button_position, button_size):
+    font = pygame.font.Font(None, 36)
+    text = font.render(button_text, True, (255, 255, 255))
+    button_rect = pygame.Rect(button_position, button_size)
+    pygame.draw.rect(screen, (0, 0, 255), button_rect) 
+    text_rect = text.get_rect(center=button_rect.center)
+    screen.blit(text, text_rect)
+    return button_rect
+
 if __name__ == '__main__':
     pygame.init()
-    screen_size = (800, 600)
+    screen_size = (SCREEN_WIDTH, SCREEN_HIGHT)
     screen = pygame.display.set_mode(screen_size)
     pygame.display.set_caption("Lightbot")
     
@@ -121,11 +140,19 @@ if __name__ == '__main__':
     
     running = True
     while running:
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                mouse_pos = event.pos
+                if load_button_rect.collidepoint(mouse_pos):
+                    actions_file_path = open_file_dialog()
+                    if actions_file_path:  # Verifica si el usuario seleccionó un archivo
+                        board.execute_actions(actions_file_path)
 
         screen.fill((200, 200, 200)) 
+        load_button_rect = draw_button(screen, "Cargar Instrucciones", (0, SCREEN_HIGHT - 50), (300, 50))
         board.draw(screen)
         pygame.display.flip() 
 
