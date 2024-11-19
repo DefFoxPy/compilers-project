@@ -10,6 +10,3 @@ Turn left
 Move forward
 Move forward
 Light up the tile
-Turn left
-Turn left
-Move forward
