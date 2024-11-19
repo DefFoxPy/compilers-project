@@ -121,6 +121,28 @@ class Board:
                 if self.bot_x == y and self.bot_y == x:
                     pygame.draw.circle(screen, (0, 0, 255), (x * cell_size + cell_size//2, y * cell_size + cell_size//2), cell_size//2)
 
+class Game:
+    def __init__(self):
+        self.levels = ['level1.txt', 'level2.txt'] 
+        self.current_level_index = 0
+        self.board = None  
+        self.load_level(self.current_level_index) 
+
+    def load_level(self, level_index):
+        """Carga el nivel especificado por level_index."""
+        if level_index < len(self.levels):
+            self.board = Board(self.levels[level_index])
+            self.current_level_index = level_index
+        else:
+            print("No hay más niveles.")
+
+    def next_level(self):
+        """Avanza al siguiente nivel si es posible."""
+        if self.board.check_status():  # Verifica si el nivel actual se completó
+            self.load_level(self.current_level_index + 1)
+            return True
+        return False
+
 def draw_button(screen, button_text, button_position, button_size):
     font = pygame.font.Font(None, 36)
     text = font.render(button_text, True, (255, 255, 255))
@@ -142,7 +164,7 @@ if __name__ == '__main__':
     screen = pygame.display.set_mode(screen_size)
     pygame.display.set_caption("Lightbot")
     
-    board = Board('board.txt')
+    game = Game()
     status_message = "Aún no ha pasado nada"
     running = True
     while running:
@@ -155,14 +177,18 @@ if __name__ == '__main__':
                 if load_button_rect.collidepoint(mouse_pos):
                     actions_file_path = open_file_dialog()
                     if actions_file_path:  # Verifica si el usuario seleccionó un archivo
-                        board.execute_actions(actions_file_path)
-                        if board.check_status():
+                        game.board.execute_actions(actions_file_path)
+                        if game.board.check_status():
                             status_message = "Objetivo Completado"
+                            if game.next_level():
+                                status_message = "Nivel completado. Avanzando al siguiente"
+                            else:
+                                status_message = "¡Felicidades! Juego terminado."
                         else:
                             status_message = "Quedaron casillas metas sin encender"
 
-        screen.fill((0, 0, 0))
-        board.draw(screen) 
+        screen.fill((50, 50, 50))
+        game.board.draw(screen) 
         load_button_rect = draw_button(screen, "Cargar Instrucciones", (0, SCREEN_HIGHT - 50), (300, 50))
         draw_status_message(screen, status_message, (SCREEN_WIDTH - 250, SCREEN_HIGHT - 25), 36) 
         pygame.display.flip() 
