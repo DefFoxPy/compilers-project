@@ -55,7 +55,7 @@ class Board:
             self.directions = ['N', 'E', 'S', 'O']  # Posibles direcciones
             self.bot_direction = 0                  # Inicia mirando hacia el norte
 
-    def execute_actions(self, actions_filename: str):
+    def execute_actions(self, actions_filename: str, screen, update_screen_func):
         """lee y ejecuta acciones de un archivo .txt """
         with open(actions_filename) as f:
             for line in f:
@@ -68,6 +68,9 @@ class Board:
                     self.turn_right()
                 elif action == "Light up the tile":
                     self.cells[self.bot_x][self.bot_y].toggle_lit()
+
+                update_screen_func(screen, self)
+                pygame.time.wait(500)
 
     def check_status(self):
         """ comprueba si cada casilla meta está iluminada"""
@@ -167,6 +170,14 @@ def show_transition_message(screen, message, wait_time=2000):
     pygame.display.flip()  # Actualiza la pantalla
     pygame.time.wait(wait_time)  # Espera durante 'wait_time' milisegundos
 
+def update_screen(screen, board):
+    screen.fill((50, 50, 50))
+    board.draw(screen) 
+    draw_status_message(screen, status_message, (SCREEN_WIDTH - 250, SCREEN_HIGHT - 25), 36)
+    load_button_rect = draw_button(screen, "Cargar Instrucciones", (0, SCREEN_HIGHT - 50), (300, 50))
+    reset_button_rect = draw_button(screen, "Reiniciar Nivel", (0, SCREEN_HIGHT - 100), (200, 50)) 
+    pygame.display.flip() 
+
 if __name__ == '__main__':
     pygame.init()
     screen_size = (SCREEN_WIDTH, SCREEN_HIGHT)
@@ -191,7 +202,7 @@ if __name__ == '__main__':
                 if load_button_rect.collidepoint(mouse_pos):
                     actions_file_path = open_file_dialog()
                     if actions_file_path:  # Verifica si el usuario seleccionó un archivo
-                        game.board.execute_actions(actions_file_path)
+                        game.board.execute_actions(actions_file_path, screen, update_screen)
                         if game.board.check_status():
                             status_message = "Objetivo Completado"
                             if game.next_level():
@@ -202,11 +213,8 @@ if __name__ == '__main__':
                         else:
                             status_message = "Quedaron casillas metas sin encender"
 
-        screen.fill((50, 50, 50))
-        game.board.draw(screen) 
         load_button_rect = draw_button(screen, "Cargar Instrucciones", (0, SCREEN_HIGHT - 50), (300, 50))
         reset_button_rect = draw_button(screen, "Reiniciar Nivel", (0, SCREEN_HIGHT - 100), (200, 50))
-        draw_status_message(screen, status_message, (SCREEN_WIDTH - 250, SCREEN_HIGHT - 25), 36) 
-        pygame.display.flip() 
+        update_screen(screen, game.board)
 
     pygame.quit()
