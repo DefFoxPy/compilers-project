@@ -41,7 +41,7 @@ class Cell:
 class Board:
 
     def __init__(self, filename: str):
-        """Reads a board file from disk and stores it as a Board object."""
+        """lee un archivo .txt que contiene el mapa y lo guarda como un objeto Board"""
         with open(filename) as f:
             header = f.readline().strip()
             (self.width, self.height) = map(int, header.split())
@@ -71,11 +71,11 @@ class Board:
 
     def check_status(self):
         """ comprueba si cada casilla meta está iluminada"""
-        done = True
         for x in range(self.width):
             for y in range(self.height):
                 if self.cells[x][y].z == META and self.cells[x][y].lit == False:
-                    done = False
+                    return False
+        return True
 
         if done:
             print("Objetivo completado")
@@ -130,6 +130,12 @@ def draw_button(screen, button_text, button_position, button_size):
     screen.blit(text, text_rect)
     return button_rect
 
+def draw_status_message(screen, message, position, size):
+    font = pygame.font.Font(None, size)
+    text = font.render(message, True, (255, 255, 255))
+    text_rect = text.get_rect(center=position)
+    screen.blit(text, text_rect)
+
 if __name__ == '__main__':
     pygame.init()
     screen_size = (SCREEN_WIDTH, SCREEN_HIGHT)
@@ -137,7 +143,7 @@ if __name__ == '__main__':
     pygame.display.set_caption("Lightbot")
     
     board = Board('board.txt')
-    
+    status_message = "Aún no ha pasado nada"
     running = True
     while running:
 
@@ -150,10 +156,15 @@ if __name__ == '__main__':
                     actions_file_path = open_file_dialog()
                     if actions_file_path:  # Verifica si el usuario seleccionó un archivo
                         board.execute_actions(actions_file_path)
+                        if board.check_status():
+                            status_message = "Objetivo Completado"
+                        else:
+                            status_message = "Quedaron casillas metas sin encender"
 
-        screen.fill((200, 200, 200)) 
+        screen.fill((0, 0, 0))
+        board.draw(screen) 
         load_button_rect = draw_button(screen, "Cargar Instrucciones", (0, SCREEN_HIGHT - 50), (300, 50))
-        board.draw(screen)
+        draw_status_message(screen, status_message, (SCREEN_WIDTH - 250, SCREEN_HIGHT - 25), 36) 
         pygame.display.flip() 
 
     pygame.quit()
