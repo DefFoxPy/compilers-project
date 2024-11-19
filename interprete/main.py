@@ -1,3 +1,11 @@
+import pygame
+import sys
+
+# constantes
+MURO = 1
+ROBOT = 2
+META = 9
+
 class Cell:
     
     def __init__(self, z=0, active=False, lit=False): 
@@ -6,15 +14,15 @@ class Cell:
         self.lit = lit
 
     def __repr__(self):
-        if self.z == 1:  # Muro
+        if self.z == MURO:  
             return 'M'
-        elif self.z == 2:  # Bot
+        elif self.z == ROBOT:  
             return 'B'
-        elif self.z == 9 and not self.lit:  # Meta
+        elif self.z == META and not self.lit:  
             return 'G'
-        elif self.lit:  # Espacio iluminado
+        elif self.lit:  
             return 'L'
-        else:  # Espacio vacío
+        else:  
             return ' '
 
     def toggle_lit(self):
@@ -56,7 +64,7 @@ class Board:
         done = True
         for x in range(self.width):
             for y in range(self.height):
-                if self.cells[x][y].z == 9 and self.cells[x][y].lit == False:
+                if self.cells[x][y].z == META and self.cells[x][y].lit == False:
                     done = False
 
         if done:
@@ -78,7 +86,7 @@ class Board:
 
         new_x, new_y = self.bot_x + dx, self.bot_y + dy
         # Verificamos si la nueva posición es un espacio vacío y está dentro del tablero
-        if 0 <= new_x < self.height and 0 <= new_y < self.width and self.cells[new_x][new_y].z == 0 or self.cells[new_x][new_y].z == 9:
+        if 0 <= new_x < self.height and 0 <= new_y < self.width and self.cells[new_x][new_y].z == 0 or self.cells[new_x][new_y].z == META:
             self.bot_x, self.bot_y = new_x, new_y
 
     def turn_left(self):
@@ -87,23 +95,38 @@ class Board:
     def turn_right(self):
         self.bot_direction = (self.bot_direction + 1) % 4
 
-    def draw(self):
+    def draw(self, screen):
+        cell_size = 100  # Tamaño de cada celda en píxeles
         for x in range(self.width):
             for y in range(self.height):
-                if x == self.bot_x and y == self.bot_y:
-                    print('B', end=' ')
-                else:
-                    print(self.cells[x][y], end=' ')
-            print()
+                rect = pygame.Rect(x * cell_size, y * cell_size, cell_size, cell_size)
+                if self.cells[y][x].z == MURO: 
+                    pygame.draw.rect(screen, (0, 0, 0), rect) 
+                elif self.cells[y][x].lit:  
+                    pygame.draw.rect(screen, (255, 255, 0), rect)  
+                elif self.cells[y][x].z == META: 
+                    pygame.draw.rect(screen, (0, 255, 0), rect)  
+                else:  # Espacio vacío
+                    pygame.draw.rect(screen, (255, 255, 255), rect)  
+                if self.bot_x == y and self.bot_y == x:
+                    pygame.draw.circle(screen, (0, 0, 255), (x * cell_size + cell_size//2, y * cell_size + cell_size//2), cell_size//2)
 
-## Uso
 if __name__ == '__main__':
+    pygame.init()
+    screen_size = (800, 600)
+    screen = pygame.display.set_mode(screen_size)
+    pygame.display.set_caption("Lightbot")
+    
     board = Board('board.txt')
-    print("Mapa inicial") # debug
-    board.draw()
-    board.check_status()
-    input('presione enter para cargar las acciones') # una espera 
-    board.execute_actions('actions.txt')
-    print("Mapa final") #debug
-    board.draw()
-    board.check_status()
+    
+    running = True
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+
+        screen.fill((200, 200, 200)) 
+        board.draw(screen)
+        pygame.display.flip() 
+
+    pygame.quit()
