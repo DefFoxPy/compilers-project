@@ -144,6 +144,7 @@ class Game:
         return False
 
 def draw_button(screen, button_text, button_position, button_size):
+    """ Muestra el botón en el cual se pide las acciones del jugador """
     font = pygame.font.Font(None, 36)
     text = font.render(button_text, True, (255, 255, 255))
     button_rect = pygame.Rect(button_position, button_size)
@@ -153,10 +154,18 @@ def draw_button(screen, button_text, button_position, button_size):
     return button_rect
 
 def draw_status_message(screen, message, position, size):
+    """ Muestra el estado actual del juego """
     font = pygame.font.Font(None, size)
     text = font.render(message, True, (255, 255, 255))
     text_rect = text.get_rect(center=position)
     screen.blit(text, text_rect)
+
+def show_transition_message(screen, message, wait_time=2000):
+    """Muestra un mensaje de transición durante un tiempo determinado."""
+    screen.fill((0, 0, 0))  # Fondo negro
+    draw_status_message(screen, message, (screen.get_width() // 2, screen.get_height() // 2), 48)
+    pygame.display.flip()  # Actualiza la pantalla
+    pygame.time.wait(wait_time)  # Espera durante 'wait_time' milisegundos
 
 if __name__ == '__main__':
     pygame.init()
@@ -174,6 +183,11 @@ if __name__ == '__main__':
                 running = False
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_pos = event.pos
+
+                if reset_button_rect.collidepoint(mouse_pos):
+                    game.load_level(game.current_level_index)
+                    status_message = "Nivel reiniciado"
+
                 if load_button_rect.collidepoint(mouse_pos):
                     actions_file_path = open_file_dialog()
                     if actions_file_path:  # Verifica si el usuario seleccionó un archivo
@@ -181,7 +195,8 @@ if __name__ == '__main__':
                         if game.board.check_status():
                             status_message = "Objetivo Completado"
                             if game.next_level():
-                                status_message = "Nivel completado. Avanzando al siguiente"
+                                show_transition_message(screen, "Nivel completado. Cargando siguiente nivel...")
+                                status_message = ""
                             else:
                                 status_message = "¡Felicidades! Juego terminado."
                         else:
@@ -190,6 +205,7 @@ if __name__ == '__main__':
         screen.fill((50, 50, 50))
         game.board.draw(screen) 
         load_button_rect = draw_button(screen, "Cargar Instrucciones", (0, SCREEN_HIGHT - 50), (300, 50))
+        reset_button_rect = draw_button(screen, "Reiniciar Nivel", (0, SCREEN_HIGHT - 100), (200, 50))
         draw_status_message(screen, status_message, (SCREEN_WIDTH - 250, SCREEN_HIGHT - 25), 36) 
         pygame.display.flip() 
 
