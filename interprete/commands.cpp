@@ -1,5 +1,8 @@
 #include <commands.hpp>
 #include <iostream>
+#include <fstream>
+
+extern std::ofstream output_file;
 
 Command::~Command() {}
 
@@ -17,28 +20,32 @@ void CommandList::addCommand(Command* cmd) {
 
 void CommandList::execute() noexcept {
     for (auto cmd : commands) {
-        //std::cout << "entro" << std::endl;
         cmd->execute(); 
     }
 }
 
 void Move::execute() noexcept {
     std::cout << "Move forward" << std::endl;
+    output_file << "Move forward" << std::endl;
 }
 
 
 void TurnLeft::execute() noexcept {
     std::cout << "Turn left" << std::endl;
+    output_file << "Turn left" << std::endl;
+
 }
 
 
 void TurnRight::execute() noexcept {
     std::cout << "Turn right" << std::endl;
+    output_file << "Turn right" << std::endl;
 }
 
 
 void LightUp::execute() noexcept {
     std::cout << "Light up the tile" << std::endl;
+    output_file << "Light up the tile" << std::endl;
 }
 
 
@@ -50,9 +57,8 @@ Loop::~Loop() {
 }
 
 void Loop::execute() noexcept {
-    //std::cout << "Entering Loop: " << iterations << " iterations" << std::endl;
     for (int i = 0; i < iterations; ++i) {
-        std::cout << "Loop iteration: " << i + 1 << std::endl;
+        //std::cout << "Loop iteration: " << i + 1 << std::endl;
         commands->execute(); 
     }
 }
@@ -68,12 +74,4 @@ Procedure::~Procedure() {
 void Procedure::execute() noexcept {
     std::cout << "Executing procedure: " << name << std::endl;
     commands->execute();
-}
-
-
-ProcedureCall::ProcedureCall(const std::string& name)
-    : procedureName(name) {}
-
-void ProcedureCall::execute() noexcept {
-    std::cout << "Calling procedure: " << procedureName << std::endl;
 }

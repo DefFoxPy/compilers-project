@@ -27,4 +27,4 @@ commands.o: commands.hpp commands.cpp
 
 .PHONY:
 clean:
-	$(RM) *.o parser.c parser.output token.h scanner.c interpreter
+	$(RM) *.o parser.c parser.output token.h scanner.c interpreter output.txt

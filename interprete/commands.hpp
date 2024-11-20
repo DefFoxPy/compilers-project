@@ -81,14 +81,3 @@ public:
     }
 };
 
-class ProcedureCall : public Command {
-private:
-    std::string procedureName;
-public:
-    ProcedureCall(const std::string& name);
-    void execute() noexcept override;
-    void destroy() noexcept override {
-        delete this;
-    }
-};
-

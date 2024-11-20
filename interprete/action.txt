@@ -1,0 +1,8 @@
+Move forward
+Move forward
+Turn left
+Move forward
+Turn left
+Move forward
+Turn left
+Light up the tile

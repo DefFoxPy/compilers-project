@@ -1,7 +1,9 @@
 %{
+
 #include "token.h"
 
 int count_line = 1;
+
 %}
 
 SPACE      [ \t]
@@ -16,7 +18,6 @@ TURN_RIGHT [Tt][Uu][Rr][Nn][_][Rr][Ii][Gg][Hh][Tt]
 LOOP       [Ll][Oo][Oo][Pp]
 LIGHT_UP   [Ll][Ii][Gg][Hh][Tt][_][Uu][Pp]
 PROCEDURE  [Pp][Rr][Oo][Cc][Ee][Dd][Uu][Rr][Ee]
-CALL       [Cc][Aa][Ll][Ll]
 COMMENT    \/\/.* 
 
 
@@ -30,7 +31,6 @@ COMMENT    \/\/.*
 {LOOP}		  { return TOKEN_LOOP; }
 {LIGHT_UP}    { return TOKEN_LIGHT_UP; }
 {PROCEDURE}   { return TOKEN_PROCEDURE; }
-{CALL}        { return TOKEN_CALL; }
 "("           { return TOKEN_LEFT_PAREN; }
 ")"           { return TOKEN_RIGHT_PAREN; }
 "{"           { return TOKEN_LEFT_BRACE; }
