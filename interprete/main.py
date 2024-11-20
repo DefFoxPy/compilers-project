@@ -129,6 +129,7 @@ class Board:
 class Game:
     def __init__(self):
         self.levels = ['level1.txt', 'level2.txt', 'level3.txt'] 
+        self.dir_levels = "levels/"
         self.current_level_index = 0
         self.board = None  
         self.load_level(self.current_level_index) 
@@ -136,7 +137,7 @@ class Game:
     def load_level(self, level_index):
         """Carga el nivel especificado por level_index."""
         if level_index < len(self.levels):
-            self.board = Board(self.levels[level_index])
+            self.board = Board(self.dir_levels + self.levels[level_index])
             self.current_level_index = level_index
             return True
         else:
