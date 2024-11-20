@@ -1,0 +1,14 @@
+PROCEDURE main() {
+    TURN_LEFT()
+    TURN_LEFT()
+    MOVE()
+    MOVE()
+    TURN_LEFT()
+    MOVE()
+    LIGHT_UP()
+    MOVE()
+    TURN_LEFT()
+    MOVE()
+    MOVE()
+    LIGHT_UP()
+}

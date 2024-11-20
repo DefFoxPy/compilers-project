@@ -1,0 +1,37 @@
+PROCEDURE main() {
+    LOOP(3) { 
+        MOVE()
+    }
+    LIGHT_UP()
+    TURN_LEFT()
+    MOVE()
+    MOVE()
+    TURN_RIGHT()
+    MOVE()
+    LIGHT_UP()
+    LOOP(2) {
+        TURN_LEFT()
+    }
+    LOOP(4) {
+        MOVE()
+    }
+    TURN_RIGHT()
+    MOVE()
+    LOOP(2) {
+        MOVE()
+        TURN_RIGHT()
+        MOVE()
+        TURN_LEFT()
+    }
+    MOVE()
+    LIGHT_UP()
+    LOOP(2) {
+        TURN_LEFT()
+    }
+    MOVE()
+    TURN_LEFT()
+    MOVE()
+    TURN_RIGHT()
+    MOVE()
+    LIGHT_UP()
+}
