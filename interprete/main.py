@@ -75,8 +75,8 @@ class Board:
 
     def check_status(self):
         """ comprueba si cada casilla meta está iluminada"""
-        for x in range(self.width):
-            for y in range(self.height):
+        for x in range(self.height):
+            for y in range(self.width):
                 if self.cells[x][y].z == META and self.cells[x][y].lit == False:
                     return False
         return True
