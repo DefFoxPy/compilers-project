@@ -36,7 +36,8 @@ class Cell:
             return ' '
 
     def toggle_lit(self):
-        self.lit = not self.lit # alternar el estado de "iluminación"
+        if self.z == META:
+            self.lit = not self.lit # alternar el estado de "iluminación"
 
 class Board:
 
