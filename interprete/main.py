@@ -65,7 +65,7 @@ class Board:
                     self.move()
                 elif action == "Turn left":
                     self.turn_left()
-                elif action == "Turn Right":
+                elif action == "Turn right":
                     self.turn_right()
                 elif action == "Light up the tile":
                     self.cells[self.bot_x][self.bot_y].toggle_lit()
