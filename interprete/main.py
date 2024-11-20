@@ -100,8 +100,9 @@ class Board:
 
         new_x, new_y = self.bot_x + dx, self.bot_y + dy
         # Verificamos si la nueva posición es un espacio vacío y está dentro del tablero
-        if 0 <= new_x < self.height and 0 <= new_y < self.width and self.cells[new_x][new_y].z == 0 or self.cells[new_x][new_y].z == META:
-            self.bot_x, self.bot_y = new_x, new_y
+        if 0 <= new_x < self.height and 0 <= new_y < self.width: 
+            if self.cells[new_x][new_y].z == 0 or self.cells[new_x][new_y].z == META:
+                self.bot_x, self.bot_y = new_x, new_y
 
     def turn_left(self):
         self.bot_direction = (self.bot_direction - 1) % 4
@@ -127,7 +128,7 @@ class Board:
 
 class Game:
     def __init__(self):
-        self.levels = ['level1.txt', 'level2.txt'] 
+        self.levels = ['level1.txt', 'level2.txt', 'level3.txt'] 
         self.current_level_index = 0
         self.board = None  
         self.load_level(self.current_level_index) 
