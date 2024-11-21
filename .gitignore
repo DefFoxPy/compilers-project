@@ -31,3 +31,7 @@
 *.out
 *.app
 scanner
+interprete/interpreter
+*.c
+*.h
+*.output
