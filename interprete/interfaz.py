@@ -18,9 +18,8 @@ def open_file_dialog():
 
 class Cell:
     
-    def __init__(self, z=0, active=False, lit=False): 
+    def __init__(self, z=0, lit=False): 
         self.z = z
-        self.active = active
         self.lit = lit
 
     def __repr__(self):
