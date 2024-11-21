@@ -67,6 +67,20 @@ public:
     }
 };
 
+class CustomFunction : public Command {
+private:
+    std::string name;
+    CommandList* commands;
+public:
+    CustomFunction(const std::string& name, CommandList* cmds);
+    virtual ~CustomFunction();
+    void destroy() noexcept override {
+        delete this;
+    } 
+    std::string getName() const;
+    void execute() noexcept;
+};
+
 
 class Procedure : public Command {
 private:

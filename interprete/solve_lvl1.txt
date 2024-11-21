@@ -1,6 +1,12 @@
+FUNCTION rotar() {
+    TURN_LEFT()
+    TURN_LEFT()
+}
+
 PROCEDURE main() {
     TURN_LEFT()
     TURN_LEFT()
+    call rotar()
     MOVE()
     MOVE()
     TURN_LEFT()

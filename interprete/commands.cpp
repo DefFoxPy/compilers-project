@@ -63,6 +63,21 @@ void Loop::execute() noexcept {
     }
 }
 
+CustomFunction::CustomFunction(const std::string& name, CommandList* commands)
+    : name(name), commands(commands) {}
+
+void CustomFunction::execute() noexcept {
+    std::cout << "Executing function: " << name << std::endl;
+    commands->execute();
+}
+
+std::string CustomFunction::getName() const {
+    return name;
+}
+
+CustomFunction::~CustomFunction() {
+    delete commands; 
+}
 
 Procedure::Procedure(const std::string& name, CommandList* commands)
     : name(name), commands(commands) {}

@@ -23,6 +23,8 @@ TURN_RIGHT [Tt][Uu][Rr][Nn][_][Rr][Ii][Gg][Hh][Tt]
 LOOP       [Ll][Oo][Oo][Pp]
 LIGHT_UP   [Ll][Ii][Gg][Hh][Tt][_][Uu][Pp]
 PROCEDURE  [Pp][Rr][Oo][Cc][Ee][Dd][Uu][Rr][Ee]
+FUNCTION   [Ff][Uu][Nn][Cc][Tt][Ii][Oo][Nn]
+CALL       [Cc][Aa][Ll][Ll]
 COMMENT    \/\/.* 
 
 
@@ -36,6 +38,8 @@ COMMENT    \/\/.*
 {LOOP}		  { return TOKEN_LOOP; }
 {LIGHT_UP}    { return TOKEN_LIGHT_UP; }
 {PROCEDURE}   { return TOKEN_PROCEDURE; }
+{FUNCTION}    { return TOKEN_FUNCTION; }
+{CALL}        { return TOKEN_CALL; }
 "("           { return TOKEN_LEFT_PAREN; }
 ")"           { return TOKEN_RIGHT_PAREN; }
 "{"           { return TOKEN_LEFT_BRACE; }
