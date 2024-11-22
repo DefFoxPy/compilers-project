@@ -141,15 +141,25 @@ class Board:
                 else:  # Espacio vacío
                     pygame.draw.rect(screen, COLOR_VACIO, rect)  
                 if self.bot_x == y and self.bot_y == x:
-                    pygame.draw.circle(screen, COLOR_BOT, (x * cell_size + cell_size//2, y * cell_size + cell_size//2), cell_size//2)
-
-
+                    draw_bot(screen, (x * cell_size + cell_size//2, y * cell_size + cell_size//2), cell_size//2, self.directions[self.bot_direction])
+            
 def open_file_dialog():
     """ permite al usuario ingresar sus instrucciones por medio de un botón """
     root = tk.Tk()
     root.withdraw()
     file_path = filedialog.askopenfilename()
     return file_path
+
+def draw_bot(screen, pos, tam, direction):
+    pygame.draw.circle(screen, COLOR_BOT, pos, tam)
+    if direction == "N":
+        pygame.draw.line(screen, COLOR_MURO, pos, [pos[0], pos[1]-tam ], tam//10)
+    elif direction == "S":
+        pygame.draw.line(screen, COLOR_MURO, pos, [pos[0], pos[1]+tam ], tam//10)
+    elif direction == "E":
+        pygame.draw.line(screen, COLOR_MURO, pos, [pos[0]+tam, pos[1]], tam//10)
+    elif direction == "O":
+        pygame.draw.line(screen, COLOR_MURO, pos, [pos[0]-tam, pos[1]], tam//10)
 
 
 def draw_button(screen, button_text, button_position, button_size):
