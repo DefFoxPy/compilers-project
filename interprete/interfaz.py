@@ -12,8 +12,8 @@ META = 9
 
 def open_file_dialog():
     root = tk.Tk()
-    root.withdraw()  # Oculta la ventana principal de Tkinter
-    file_path = filedialog.askopenfilename()  # Abre el diálogo para seleccionar un archivo
+    root.withdraw()
+    file_path = filedialog.askopenfilename()
     return file_path
 
 class Cell:
@@ -36,7 +36,7 @@ class Cell:
 
     def toggle_lit(self):
         if self.z == META:
-            self.lit = not self.lit # alternar el estado de "iluminación"
+            self.lit = not self.lit
 
 class Board:
 
@@ -49,11 +49,11 @@ class Board:
             for x, line in enumerate(f.read().splitlines()):
                 for y, curr_cell in enumerate(map(int, line.split())):
                     self.cells[x][y] = Cell(curr_cell)
-                    if curr_cell == 2:              # Posición inicial del bot
+                    if curr_cell == 2:                  # Posición inicial del bot
                         self.bot_x, self.bot_y = x, y
-                        self.cells[x][y].z = 0      # Marcamos la posición inicial como espacio vacío
-            self.directions = ['N', 'E', 'S', 'O']  # Posibles direcciones
-            self.bot_direction = 0                  # Inicia mirando hacia el norte
+                        self.cells[x][y].z = 0          # Marcamos la posición inicial como espacio vacío
+            self.directions = ['N', 'E', 'S', 'O']      # Posibles direcciones
+            self.bot_direction = 0                      # Inicia mirando hacia el norte
 
     def execute_actions(self, actions_filename: str, screen, update_screen_func, status_message):
         """lee y ejecuta acciones de un archivo .txt """
@@ -110,7 +110,7 @@ class Board:
         self.bot_direction = (self.bot_direction + 1) % 4
 
     def draw(self, screen):
-        cell_size = 100  # Tamaño de cada celda en píxeles
+        cell_size = 100
         for x in range(self.width):
             for y in range(self.height):
                 rect = pygame.Rect(x * cell_size, y * cell_size, cell_size, cell_size)
@@ -126,6 +126,7 @@ class Board:
                     pygame.draw.circle(screen, (0, 0, 255), (x * cell_size + cell_size//2, y * cell_size + cell_size//2), cell_size//2)
 
 class Game:
+    """ Representación del juego como tal """
     def __init__(self):
         self.levels = ['level1.txt', 'level2.txt', 'level3.txt'] 
         self.dir_levels = "levels/"
@@ -134,7 +135,7 @@ class Game:
         self.load_level(self.current_level_index) 
 
     def load_level(self, level_index):
-        """Carga el nivel especificado por level_index."""
+        """Carga el nivel especificado por level_index. return true si existe el nivel"""
         if level_index < len(self.levels):
             self.board = Board(self.dir_levels + self.levels[level_index])
             self.current_level_index = level_index
@@ -144,7 +145,7 @@ class Game:
 
     def next_level(self):
         """Avanza al siguiente nivel si es posible."""
-        if self.board.check_status():  # Verifica si el nivel actual se completó
+        if self.board.check_status():
             return self.load_level(self.current_level_index + 1)
         return False
 
@@ -167,12 +168,13 @@ def draw_status_message(screen, message, position, size):
 
 def show_transition_message(screen, message, wait_time=2000):
     """Muestra un mensaje de transición durante un tiempo determinado."""
-    screen.fill((0, 0, 0))  # Fondo negro
+    screen.fill((0, 0, 0))
     draw_status_message(screen, message, (screen.get_width() // 2, screen.get_height() // 2), 48)
-    pygame.display.flip()  # Actualiza la pantalla
-    pygame.time.wait(wait_time)  # Espera durante 'wait_time' milisegundos
+    pygame.display.flip()
+    pygame.time.wait(wait_time)
 
 def update_screen(screen, board, status_message = ""):
+    """ función auxiliar que nos permite actualizar pantalla  """
     screen.fill((50, 50, 50))
     board.draw(screen) 
     draw_status_message(screen, status_message, (SCREEN_WIDTH - 250, SCREEN_HIGHT - 25), 36)
@@ -203,7 +205,7 @@ if __name__ == '__main__':
 
                 if load_button_rect.collidepoint(mouse_pos):
                     actions_file_path = open_file_dialog()
-                    if actions_file_path:  # Verifica si el usuario seleccionó un archivo
+                    if actions_file_path:
                         game.board.execute_actions(actions_file_path, screen, update_screen, status_message)
                         if game.board.check_status():
                             status_message = "Objetivo Completado"
