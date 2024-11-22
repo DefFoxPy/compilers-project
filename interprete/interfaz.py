@@ -98,11 +98,6 @@ class Board:
                     return False
         return True
 
-        if done:
-            print("Objetivo completado")
-        else:
-            print("Quedaron casillas metas sin encender...")
-
     def move(self):
         """mueve el robot a la dirección que mira si la casilla está vacía"""
         dx, dy = 0, 0
