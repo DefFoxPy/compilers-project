@@ -9,6 +9,11 @@ SCREEN_HIGHT = 600
 MURO = 1
 ROBOT = 2
 META = 9
+COLOR_MURO = (0, 0, 0)
+COLOR_BOT = (0, 0, 255)
+COLOR_META = (0, 255, 0)
+COLOR_LIT = (255, 255, 0)
+COLOR_VACIO = (255, 255, 255)
 
 class Game:
     """ Representación del juego como tal """
@@ -128,15 +133,15 @@ class Board:
             for y in range(self.height):
                 rect = pygame.Rect(x * cell_size, y * cell_size, cell_size, cell_size)
                 if self.cells[y][x].z == MURO: 
-                    pygame.draw.rect(screen, (0, 0, 0), rect) 
+                    pygame.draw.rect(screen, COLOR_MURO, rect) 
                 elif self.cells[y][x].lit:  
-                    pygame.draw.rect(screen, (255, 255, 0), rect)  
+                    pygame.draw.rect(screen, COLOR_LIT, rect)  
                 elif self.cells[y][x].z == META: 
-                    pygame.draw.rect(screen, (0, 255, 0), rect)  
+                    pygame.draw.rect(screen, COLOR_META, rect)  
                 else:  # Espacio vacío
-                    pygame.draw.rect(screen, (255, 255, 255), rect)  
+                    pygame.draw.rect(screen, COLOR_VACIO, rect)  
                 if self.bot_x == y and self.bot_y == x:
-                    pygame.draw.circle(screen, (0, 0, 255), (x * cell_size + cell_size//2, y * cell_size + cell_size//2), cell_size//2)
+                    pygame.draw.circle(screen, COLOR_BOT, (x * cell_size + cell_size//2, y * cell_size + cell_size//2), cell_size//2)
 
 
 def open_file_dialog():
