@@ -10,11 +10,29 @@ MURO = 1
 ROBOT = 2
 META = 9
 
-def open_file_dialog():
-    root = tk.Tk()
-    root.withdraw()
-    file_path = filedialog.askopenfilename()
-    return file_path
+class Game:
+    """ Representación del juego como tal """
+    def __init__(self):
+        self.levels = ['level1.txt', 'level2.txt', 'level3.txt'] 
+        self.dir_levels = "levels/"
+        self.current_level_index = 0
+        self.board = None  
+        self.load_level(self.current_level_index) 
+
+    def load_level(self, level_index):
+        """Carga el nivel especificado por level_index. return true si existe el nivel"""
+        if level_index < len(self.levels):
+            self.board = Board(self.dir_levels + self.levels[level_index])
+            self.current_level_index = level_index
+            return True
+        else:
+            return False
+
+    def next_level(self):
+        """Avanza al siguiente nivel si es posible."""
+        if self.board.check_status():
+            return self.load_level(self.current_level_index + 1)
+        return False
 
 class Cell:
     
@@ -125,29 +143,14 @@ class Board:
                 if self.bot_x == y and self.bot_y == x:
                     pygame.draw.circle(screen, (0, 0, 255), (x * cell_size + cell_size//2, y * cell_size + cell_size//2), cell_size//2)
 
-class Game:
-    """ Representación del juego como tal """
-    def __init__(self):
-        self.levels = ['level1.txt', 'level2.txt', 'level3.txt'] 
-        self.dir_levels = "levels/"
-        self.current_level_index = 0
-        self.board = None  
-        self.load_level(self.current_level_index) 
 
-    def load_level(self, level_index):
-        """Carga el nivel especificado por level_index. return true si existe el nivel"""
-        if level_index < len(self.levels):
-            self.board = Board(self.dir_levels + self.levels[level_index])
-            self.current_level_index = level_index
-            return True
-        else:
-            return False
+def open_file_dialog():
+    """ permite al usuario ingresar sus instrucciones por medio de un botón """
+    root = tk.Tk()
+    root.withdraw()
+    file_path = filedialog.askopenfilename()
+    return file_path
 
-    def next_level(self):
-        """Avanza al siguiente nivel si es posible."""
-        if self.board.check_status():
-            return self.load_level(self.current_level_index + 1)
-        return False
 
 def draw_button(screen, button_text, button_position, button_size):
     """ Muestra el botón en el cual se pide las acciones del jugador """
